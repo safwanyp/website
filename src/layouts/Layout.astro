@@ -1,54 +1,27 @@
 ---
-interface Props {
-  title: string;
-}
+import Head from '@/components/Head.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { SITE } from '@/config';
 
-const { title } = Astro.props;
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { title, description } = Astro.props;
 ---
 
 <!doctype html>
 <html lang='en'>
   <head>
-    <meta charset='UTF-8' />
-    <meta name='description' content='Astro description' />
-    <meta name='viewport' content='width=device-width' />
-    <link rel='icon' type='image/svg+xml' href='/favicon.svg' />
-    <meta name='generator' content={Astro.generator} />
-    <title>{title}</title>
+    <Head title={`${title} | ${SITE.NAME}`} description={description} />
   </head>
   <body>
-    <slot />
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
   </body>
 </html>
-<style is:global>
-  :root {
-    --color-primary-100: #00ff95;
-    --color-primary-200: #50ffa1;
-    --color-primary-300: #72ffad;
-    --color-primary-400: #8cffb9;
-    --color-primary-500: #a3ffc4;
-    --color-primary-600: #b7ffd0;
-
-    --color-surface-100: #141414;
-    --color-surface-200: #292929;
-    --color-surface-300: #404040;
-    --color-surface-400: #585858;
-    --color-surface-500: #727272;
-    --color-surface-600: #8c8c8c;
-  }
-  html {
-    font-family: system-ui, sans-serif;
-    background: var(--color-surface-100);
-  }
-  code {
-    font-family:
-      Menlo,
-      Monaco,
-      Lucida Console,
-      Liberation Mono,
-      DejaVu Sans Mono,
-      Bitstream Vera Sans Mono,
-      Courier New,
-      monospace;
-  }
-</style>
