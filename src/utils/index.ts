@@ -27,22 +27,28 @@ const readingTime: ReadingTime = (html) => {
 };
 
 const dateRange: DateRange = (startDate, endDate) => {
-  const startMonth = startDate.toLocaleString('default', { month: 'short' });
-  const startYear = startDate.getFullYear().toString();
+  const startDateObj = new Date(startDate);
+  const endDateObj = endDate ? new Date(endDate) : null;
+
+  const startMonth = startDateObj.toLocaleString('default', { month: 'short' });
+  const startYear = startDateObj.getFullYear().toString();
   let endMonth;
   let endYear;
 
-  if (endDate) {
-    if (typeof endDate === 'string') {
+  if (endDateObj) {
+    if (typeof endDateObj === 'string') {
       endMonth = '';
-      endYear = endDate;
+      endYear = endDateObj;
     } else {
-      endMonth = endDate.toLocaleString('default', { month: 'short' });
-      endYear = endDate.getFullYear().toString();
+      endMonth = endDateObj.toLocaleString('default', { month: 'short' });
+      endYear = endDateObj.getFullYear().toString();
     }
+  } else {
+    endMonth = 'Present';
+    endYear = '';
   }
 
-  return `${startMonth}${startYear} - ${endMonth}${endYear}`;
+  return `${startMonth} ${startYear} - ${endMonth} ${endYear}`;
 };
 
 export { combineClassNames, formatDate, readingTime, dateRange };
