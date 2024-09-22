@@ -35,16 +35,12 @@ const work = await Promise.all(
 
 <PageLayout title={HOME.TITLE} description={HOME.DESCRIPTION}>
   <Container>
-    <h4 class='animate font-semibold text-black dark:text-white'>
-      Hello, hej, namaste! <span class='text-xl'>👋🏻</span>
+    <h4 class='animate font-semibold text-black dark:text-white' id='start'>
+      Hello <span class='text-xl'>👋🏻</span>
     </h4>
     <div class='space-y-16'>
       <section>
         <article class='space-y-4'>
-          <p class='animate'>
-            I only know so many ways to say hello, but I'm sure you get the
-            point. Welcome to my little corner of the internet!
-          </p>
           <p class='animate'>
             The name's Safwan. I'm a software engineer specializing in web
             development. Frontend, backend, DevOps, you name it. I'm a fullstack
@@ -52,19 +48,8 @@ const work = await Promise.all(
             internet.
           </p>
           <p class='animate'>
-            This site is my digital "palace" (of sorts) where I share everything
-            I know about and learn. From blog posts to projects, to my work
-            experience, it's all here.
-          </p>
-          <p class='animate'>
             This site's main purpose is for me to document my journey as a
             developer and as a side benefit, share my knowledge with the world.
-          </p>
-          <p class='animate'>
-            This site has been in the works for a while now. I could never find
-            a design that I was satisfied with. Eventually, I looked at a crap
-            ton of personal websites to get inspiration and finally settled on
-            this design and I'm happy with it. Simple, yet pleasing 😌
           </p>
         </article>
       </section>
@@ -85,7 +70,7 @@ const work = await Promise.all(
         </ul>
       </section>
 
-      <section class='animate space-y-6'>
+      <section class='animate space-y-6' id='work-exp'>
         <div class='flex flex-wrap gap-y-2 items-center justify-between'>
           <h5 class='font-semibold text-black dark:text-white'>
             Work Experience
@@ -112,7 +97,7 @@ const work = await Promise.all(
         </ul>
       </section>
 
-      <section class='animate space-y-6'>
+      <section class='animate space-y-6' id='projects'>
         <div class='flex flex-wrap gap-y-2 items-center justify-between'>
           <h5 class='font-semibold text-black dark:text-white'>
             Recent projects
@@ -130,7 +115,7 @@ const work = await Promise.all(
         </ul>
       </section>
 
-      <section class='animate space-y-4'>
+      <section class='animate space-y-4' id='contact'>
         <h5 class='font-semibold text-black dark:text-white'>Let's Connect</h5>
         <article>
           <p>
