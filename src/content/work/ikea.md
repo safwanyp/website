@@ -5,4 +5,14 @@ dateStart: 'December 19, 2023'
 dateEnd: ''
 ---
 
-Voluptatem est quaerat voluptas praesentium ipsa dolorem dignissimos nulla ratione distinctio quae maiores eligendi nostrum? Quibusdam, debitis voluptatum, lorem ipsum dolor. Sit amet consectetur adipisicing elit. Iure illo neque tempora.
+- Working as a cross-functional Software Engineer in the Customer Rewards product team.
+- Technologies used on a daily basis:
+  - JavaScript and TypeScript
+  - Node.js, Express, Hono, Vue, Nuxt
+  - Terraform
+  - GCP: Cloud Run, App Engine, Cloud Build, Cloud SQL, VPC, Load Balancer
+- Implementing and maintaining apps built around various patterns:
+  - Command Query Responsibility Segregation (CQRS)
+  - Domain-Driven Design (DDD)
+  - Event-Driven Architecture (EDA)
+  - Ports and Adapters Pattern (Hexagonal Architecture)

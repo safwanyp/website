@@ -1,8 +1,9 @@
 ---
 company: 'Curamet'
 role: 'Fullstack Developer'
-dateStart: '01/01/2020'
-dateEnd: '11/27/2022'
+dateStart: 'December 19, 2023'
+dateEnd: ''
 ---
 
-Voluptatem est quaerat voluptas praesentium ipsa dolorem dignissimos nulla ratione distinctio quae maiores eligendi nostrum? Quibusdam, debitis voluptatum, lorem ipsum dolor. Sit amet consectetur adipisicing elit. Iure illo neque tempora.
+- Curamet is a Software Engineering consultancy based in Sweden.
+- Currently working as a consultant IKEA.
