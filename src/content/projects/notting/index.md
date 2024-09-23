@@ -45,7 +45,7 @@ Maybe AWS S3, or GCS, or even Git. I don't know what I will go with.
 To make these "switches" as easily as possible, Ports and Adapters will come in handy.
 
 The following diagram is something I whipped up to illustrate this implementation.
-![Image illustrating the Ports and Adapters implementation in the Notting app](/images/notting-pna_diagram.png)
+![Image illustrating the Ports and Adapters implementation in the Notting app](/images/notting-pna_diagram.webp)
 
 The app's core logic is defined inside the app itself. To get the app to do something for me (the user), I will
 need to go through one of the driver ports, which are on the left-hand side. Let's take the "For Interacting with the App"

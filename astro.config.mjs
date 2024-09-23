@@ -6,6 +6,7 @@ import tailwind from '@astrojs/tailwind';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://safwanyp.github.io',
+  site: 'https://safwanyp.vercel.app',
+  trailingSlash: 'ignore',
   integrations: [mdx(), sitemap(), tailwind()]
 });

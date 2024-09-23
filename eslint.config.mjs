@@ -22,7 +22,7 @@ export default [
       sourceType: 'module',
 
       parserOptions: {
-        tsconfigRootDir: '/Users/curamet/development/pers/website'
+        tsconfigRootDir: '.'
       }
     }
   },
