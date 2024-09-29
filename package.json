@@ -22,6 +22,7 @@
     "@fontsource/lora": "^5.1.0",
     "@tailwindcss/typography": "^0.5.15",
     "astro": "^4.15.6",
+    "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",
     "sharp": "^0.33.5",
     "tailwind-merge": "^2.5.2",
@@ -29,6 +30,7 @@
     "typescript": "^5.6.2"
   },
   "devDependencies": {
+    "@types/canvas-confetti": "^1.6.4",
     "@typescript-eslint/eslint-plugin": "^8.5.0",
     "@typescript-eslint/parser": "^8.5.0",
     "eslint": "^9.10.0",

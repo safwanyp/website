@@ -1,0 +1,97 @@
+---
+
+---
+
+<script>
+  import confetti from 'canvas-confetti';
+
+  let typedKeys = '';
+  const confettiWord = 'confetti';
+  const trixaWord = 'trixa';
+
+  // Create a div for the Trixa message
+  const trixaMessageDiv = document.createElement('div');
+  trixaMessageDiv.style.position = 'fixed';
+  trixaMessageDiv.style.top = '50%';
+  trixaMessageDiv.style.left = '50%';
+  trixaMessageDiv.style.transform = 'translate(-50%, -50%)';
+  trixaMessageDiv.style.fontSize = '4rem';
+  trixaMessageDiv.style.fontWeight = 'bold';
+  trixaMessageDiv.style.color = '#FF1493';
+  trixaMessageDiv.style.textAlign = 'center';
+  trixaMessageDiv.style.zIndex = '9999';
+  trixaMessageDiv.style.display = 'none';
+  document.body.appendChild(trixaMessageDiv);
+
+  document.addEventListener('keydown', (event) => {
+    if (
+      (event.target as Element)?.tagName.toLowerCase() === 'input' ||
+      (event.target as Element)?.tagName.toLowerCase() === 'textarea'
+    ) {
+      return;
+    }
+
+    typedKeys += event.key.toLowerCase();
+
+    // Keep only the last 8 characters (length of the longer word 'confetti')
+    if (typedKeys.length > confettiWord.length) {
+      typedKeys = typedKeys.slice(-confettiWord.length);
+    }
+
+    if (typedKeys.endsWith(confettiWord)) {
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+      typedKeys = '';
+    } else if (typedKeys.endsWith(trixaWord)) {
+      showTrixaMessage();
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 }
+      });
+      typedKeys = '';
+    }
+  });
+
+  function showTrixaMessage() {
+    trixaMessageDiv.textContent = 'TRIXA IS THE BEST!';
+    trixaMessageDiv.style.display = 'block';
+    trixaMessageDiv.style.backgroundColor = 'rgba(255, 20, 147, 0.1)';
+
+    // Animate the message
+    trixaMessageDiv.animate(
+      [
+        { transform: 'translate(-50%, -50%) scale(0)', opacity: 0 },
+        {
+          transform: 'translate(-50%, -50%) scale(1.2)',
+          opacity: 1,
+          offset: 0.8
+        },
+        { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 }
+      ],
+      {
+        duration: 500,
+        easing: 'ease-out'
+      }
+    );
+
+    // Hide the message after 3 seconds with a smooth exit animation
+    setTimeout(() => {
+      trixaMessageDiv.animate(
+        [
+          { transform: 'translate(-50%, -50%) scale(1)', opacity: 1 },
+          { transform: 'translate(-50%, -50%) scale(0)', opacity: 0 }
+        ],
+        {
+          duration: 500,
+          easing: 'ease-in'
+        }
+      ).onfinish = () => {
+        trixaMessageDiv.style.display = 'none';
+      };
+    }, 2000);
+  }
+</script>
