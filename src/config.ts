@@ -30,10 +30,6 @@ const PROJECTS: Metadata = {
 
 const SOCIALS: Socials = [
   {
-    NAME: 'twitter-x',
-    HREF: 'https://twitter.com/debingalooo'
-  },
-  {
     NAME: 'github',
     HREF: 'https://github.com/safwanyp'
   },
