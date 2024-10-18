@@ -58,7 +58,7 @@ const work = await Promise.all(
       <section class='animate space-y-6'>
         <div class='flex flex-wrap gap-y-2 items-center justify-between'>
           <h5 class='font-semibold text-black dark:text-white'>Latest posts</h5>
-          <Link href='/blog'> See all posts </Link>
+          <Link href='/blog'> View all posts </Link>
         </div>
         <ul class='flex flex-col gap-4'>
           {
@@ -76,7 +76,7 @@ const work = await Promise.all(
           <h5 class='font-semibold text-black dark:text-white'>
             Recent projects
           </h5>
-          <Link href='/projects'> See all projects </Link>
+          <Link href='/projects'> View all projects </Link>
         </div>
         <ul class='flex flex-col gap-4'>
           {
@@ -94,7 +94,7 @@ const work = await Promise.all(
           <h5 class='font-semibold text-black dark:text-white'>
             Work Experience
           </h5>
-          <Link href='/work'> See all work </Link>
+          <Link href='/work'> View all roles </Link>
         </div>
         <ul class='flex flex-col space-y-4'>
           {
@@ -107,9 +107,6 @@ const work = await Promise.all(
                   {entry.data.company}
                 </div>
                 <div class='text-sm opacity-75'>{entry.data.role}</div>
-                <article>
-                  <entry.Content />
-                </article>
               </li>
             ))
           }
@@ -117,13 +114,13 @@ const work = await Promise.all(
       </section>
 
       <section class='animate space-y-4' id='contact'>
-        <h5 class='font-semibold text-black dark:text-white'>Let's Connect</h5>
+        <h5 class='font-semibold text-black dark:text-white'>Get in touch</h5>
         <article>
           <p>
             If you want to connect with me for whatever reason - be it a
             collaboration, a project, or just to say hi - feel free to reach out
             to me on any of the following platforms. I'm always open to new
-            opportunities and meeting new people. So don't be shy! 🙃
+            opportunities and meeting new people. Don't be shy!
           </p>
         </article>
         <Socials />
