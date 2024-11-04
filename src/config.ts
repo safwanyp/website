@@ -34,6 +34,10 @@ const SOCIALS: Socials = [
     HREF: 'https://github.com/safwanyp'
   },
   {
+    NAME: 'bluesky',
+    HREF: 'https://bsky.app/profile/safwanyp.com'
+  },
+  {
     NAME: 'linkedin',
     HREF: 'https://www.linkedin.com/in/safwanyp'
   }
