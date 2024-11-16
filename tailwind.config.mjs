@@ -11,7 +11,7 @@ export default {
         serif: ['Lora', ...defaultTheme.fontFamily.serif]
       },
       colors: {
-        'bg-dark': '#171d20'
+        'bg-dark': '#1E1E24'
       }
     }
   },

@@ -8,7 +8,13 @@ const { href } = Astro.props;
 
 <a
   href={href}
-  class='relative group w-fit flex pl-7 pr-3 py-1.5 flex-nowrap rounded border border-black/15 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5 hover:text-black dark:hover:text-white transition-colors duration-300 ease-in-out'
+  class='relative group w-fit flex pl-7 pr-3 py-1.5 flex-nowrap rounded
+  border border-black/15 dark:border-white/20
+  hover:bg-lime-500/30 dark:hover:bg-lime-300/5
+  hover:text-black dark:hover:text-white
+  hover:border-lime-700 dark:hover:border-lime-300
+  hover:shadow-lg hover:shadow-lime-600/30 dark:hover:shadow-lime-300/10
+  transition-all duration-300 ease-in-out'
 >
   <svg
     xmlns='http://www.w3.org/2000/svg'
