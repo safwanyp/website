@@ -4,7 +4,7 @@ import Container from '@/components/Container.astro';
 import PageLayout from '@/layouts/Layout.astro';
 import ArrowCard from '@/components/NavCard.astro';
 import Link from '@/components/Link.astro';
-import { SITE, HOME, SOCIALS } from '@/config';
+import { SITE, HOME } from '@/config';
 import { dateRange } from '@/utils';
 import Socials from '@/components/Socials.astro';
 
@@ -119,8 +119,9 @@ const work = await Promise.all(
           <p>
             If you want to connect with me for whatever reason - be it a
             collaboration, a project, or just to say hi - feel free to reach out
-            to me on any of the following platforms. I'm always open to new
-            opportunities and meeting new people. Don't be shy!
+            to me on any of the following platforms, but I'm most active on
+            Bluesky! I'm always open to new opportunities and meeting new
+            people. Don't be shy!
           </p>
         </article>
         <Socials />
