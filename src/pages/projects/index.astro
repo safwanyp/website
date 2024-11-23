@@ -1,15 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import Container from '@/components/Container.astro';
 import NavCard from '@/components/NavCard.astro';
 import { PROJECTS } from '@/config';
+import { ghost } from '@/lib/ghost';
 
-const projects = (await getCollection('projects'))
-  .filter((project) => !project.data.draft)
-  .sort(
-    (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
-  );
+const projects = await ghost.posts.browse({
+  limit: 'all',
+  order: 'published_at DESC',
+  filter: 'tag:projects',
+  include: 'tags'
+});
 ---
 
 <Layout title={PROJECTS.TITLE} description={PROJECTS.DESCRIPTION}>

@@ -1,15 +1,17 @@
 ---
-import type { CollectionEntry } from 'astro:content';
+import type { PostOrPage } from '@tryghost/content-api';
 
 type Props = {
-  entry: CollectionEntry<'blog'> | CollectionEntry<'projects'>;
+  entry: PostOrPage;
 };
 
 const { entry } = Astro.props;
 ---
 
 <a
-  href={`/${entry.collection}/${entry.slug}`}
+  href={entry.tags && entry.tags.length > 0
+    ? `/${entry.tags[0].name}/${entry.slug}`
+    : '#'}
   class='relative group flex flex-nowrap py-3 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20
   hover:bg-lime-500/30 dark:hover:bg-lime-300/5
   hover:text-black dark:hover:text-white
@@ -19,10 +21,10 @@ const { entry } = Astro.props;
 >
   <div class='flex flex-col flex-1 truncate'>
     <div class='font-semibold flex gap-2'>
-      {entry.data.title}
+      {entry.title}
     </div>
     <div class='text-sm'>
-      {entry.data.description}
+      {entry.excerpt}
     </div>
   </div>
   <svg

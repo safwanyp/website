@@ -1,22 +1,29 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
 import { HOME } from '@/config';
+import { ghost } from '@/lib/ghost';
 
 type Context = {
   site: string;
 };
 
 export async function GET(context: Context) {
-  const blog = (await getCollection('blog')).filter(
-    (post: { data: { draft: boolean } }) => post.data.draft
-  );
+  const blog = await ghost.posts.browse({
+    limit: 'all',
+    order: 'published_at DESC',
+    filter: 'tag:blog',
+    include: 'tags'
+  });
 
-  const projects = (await getCollection('projects')).filter(
-    (project: { data: { draft: boolean } }) => project.data.draft
-  );
+  const projects = await ghost.posts.browse({
+    limit: 'all',
+    order: 'published_at DESC',
+    filter: 'tag:projects',
+    include: 'tags'
+  });
 
   const items = [...blog, ...projects].sort(
-    (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
+    (a, b) =>
+      new Date(b.published_at!).valueOf() - new Date(a.published_at!).valueOf()
   );
 
   return rss({
@@ -24,10 +31,10 @@ export async function GET(context: Context) {
     description: HOME.DESCRIPTION,
     site: context.site,
     items: items.map((item) => ({
-      title: item.data.title,
-      description: item.data.description,
-      pubDate: item.data.date,
-      link: `/${item.collection}/${item.slug}/`
+      title: String(item.title),
+      description: String(item.excerpt),
+      pubDate: new Date(item.published_at!),
+      link: `/${item.tags ? item.tags[0].name : ''}/${item.slug}/`
     }))
   });
 }

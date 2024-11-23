@@ -1,22 +1,22 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
 import Layout from '@/layouts/Layout.astro';
 import Container from '@/components/Container.astro';
 import NavCard from '@/components/NavCard.astro';
 import { BLOG } from '@/config';
+import { ghost } from '@/lib/ghost';
+import type { PostOrPage } from '@tryghost/content-api';
 
-const data = (await getCollection('blog'))
-  .filter((post) => !post.data.draft)
-  .sort(
-    (a, b) => new Date(b.data.date).valueOf() - new Date(a.data.date).valueOf()
-  );
+const data = await ghost.posts.browse({
+  limit: 'all',
+  order: 'published_at DESC',
+  filter: 'tag:blog',
+  include: 'tags'
+});
 
-type Acc = {
-  [year: string]: CollectionEntry<'blog'>[];
-};
+type Acc = Record<string, PostOrPage[]>;
 
 const posts = data.reduce((acc: Acc, post) => {
-  const year = new Date(post.data.date).getFullYear().toString();
+  const year = new Date(post.published_at!).getFullYear().toString();
   if (!acc[year]) {
     acc[year] = [];
   }
