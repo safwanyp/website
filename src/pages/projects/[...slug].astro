@@ -6,6 +6,7 @@ import { readingTime } from '@/utils';
 import Back from '@/components/Back.astro';
 import { ghost } from '@/lib/ghost';
 import type { PostOrPage } from '@tryghost/content-api';
+import Socials from '@/components/Socials.astro';
 
 export async function getStaticPaths() {
   const projects = await ghost.posts.browse({
@@ -47,5 +48,6 @@ const project = Astro.props;
     <article class='animate'>
       <Fragment set:html={project.html} />
     </article>
+    <Socials />
   </Container>
 </Layout>
