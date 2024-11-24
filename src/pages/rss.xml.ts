@@ -35,6 +35,7 @@ export async function GET(context: Context) {
       description: String(item.excerpt),
       pubDate: new Date(item.published_at!),
       link: `/${item.tags ? item.tags[0].name : ''}/${item.slug}/`
-    }))
+    })),
+    stylesheet: '/rss.xsl'
   });
 }
