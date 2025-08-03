@@ -14,7 +14,7 @@
   },
   "volta": {
     "node": "20.18.1",
-    "pnpm": "8.15.9"
+    "pnpm": "10.14.0"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -46,7 +46,7 @@
     "prettier-config-standard": "^7.0.0",
     "prettier-plugin-astro": "^0.14.1"
   },
-  "packageManager": "pnpm@8.15.9",
+  "packageManager": "pnpm@10.14.0",
   "engines": {
     "node": "20.18.1"
   }
