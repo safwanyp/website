@@ -16,6 +16,8 @@ const compat = new FlatCompat({
 export default [
   ...compat.extends('plugin:astro/recommended'),
   {
+    files: ['**/*.ts'],
+
     languageOptions: {
       parser: tsParser,
       ecmaVersion: 'latest',

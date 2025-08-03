@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
@@ -11,6 +11,15 @@ export default defineConfig({
   integrations: [mdx(), sitemap(), tailwind()],
   server: {
     port: 3000,
-    host: true,
+    host: true
+  },
+  env: {
+    schema: {
+      CONTENT_API_KEY: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: false
+      })
+    }
   }
 });
