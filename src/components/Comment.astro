@@ -1,0 +1,23 @@
+---
+import type { Comment } from '@/types';
+
+interface Props {
+  comment: Comment;
+}
+
+const { comment } = Astro.props;
+---
+
+<div
+  class='w-full flex flex-col gap-2 pb-2 border-b dark:border-b-stone-100/25 border-b-bg-dark/25'
+>
+  <div class='w-full flex justify-start items-baseline gap-4'>
+    <span class='font-bold leading-tight'>
+      {comment.commenter.realName || comment.commenter.displayName}
+    </span>
+    <span class='font-thin text-sm leading-tight text-gray-500'>
+      {comment.updatedAt}
+    </span>
+  </div>
+  <span>{comment.content}</span>
+</div>
