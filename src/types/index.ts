@@ -16,4 +16,18 @@ type Socials = {
   HREF: string;
 }[];
 
-export type { Site, Metadata, Socials };
+type Commenter = {
+  displayName: string;
+  realName: string;
+};
+
+type Comment = {
+  id: string;
+  hostId: string;
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  commenter: Commenter;
+};
+
+export type { Site, Metadata, Socials, Commenter, Comment };
