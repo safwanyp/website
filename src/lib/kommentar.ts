@@ -7,18 +7,26 @@ type CommentToPost = {
 };
 
 type PostComment = ({
+  baseUrl,
   comment,
   sessionId
 }: {
+  baseUrl: string;
   comment: CommentToPost;
   sessionId: string;
 }) => Promise<Comment>;
 type GetComments = ({
+  baseUrl,
   hostId
 }: {
+  baseUrl: string;
   hostId: Comment['hostId'];
 }) => Promise<Comment[] | []>;
 type MapComment = (comment: Comment) => Comment;
+
+const removeTrailingSlash = (url: string) => {
+  return url.endsWith('/') ? url.slice(0, -1) : url;
+};
 
 const mapComment: MapComment = (comment) => {
   const mapped = {
@@ -42,9 +50,10 @@ const mapComment: MapComment = (comment) => {
   return mapped;
 };
 
-const postComment: PostComment = async ({ comment, sessionId }) => {
+const postComment: PostComment = async ({ baseUrl, comment, sessionId }) => {
+  const base = removeTrailingSlash(baseUrl);
   const response = await fetch(
-    `http://localhost:3000/api/kommentar/comments/${comment.hostId}`,
+    `${base}/api/kommentar/comments/${comment.hostId}`,
     {
       method: 'POST',
       headers: {
@@ -60,8 +69,9 @@ const postComment: PostComment = async ({ comment, sessionId }) => {
   return postedComment;
 };
 
-const getComments: GetComments = async ({ hostId }) => {
-  const fetchUrl = `http://localhost:3000/api/kommentar/comments/${hostId}`;
+const getComments: GetComments = async ({ baseUrl, hostId }) => {
+  const base = removeTrailingSlash(baseUrl);
+  const fetchUrl = `${base}/api/kommentar/comments/${hostId}`;
 
   const response = await fetch(fetchUrl, {
     method: 'GET',

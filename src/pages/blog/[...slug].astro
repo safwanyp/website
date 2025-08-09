@@ -89,6 +89,7 @@ if (Astro.request.method === 'POST') {
 
     if (!hasErrors && Astro.cookies.has('userSessionId')) {
       await postComment({
+        baseUrl: String(Astro.url.origin),
         comment: {
           hostId: String(`blog-${slug}`),
           content: String(comment.trim()),
@@ -113,7 +114,10 @@ if (Astro.request.method === 'POST') {
   }
 }
 
-const comments = await getComments({ hostId: `blog-${slug}` });
+const comments = await getComments({
+  baseUrl: String(Astro.url.origin),
+  hostId: `blog-${slug}`
+});
 ---
 
 <Layout title={String(blogPost.title)} description={String(blogPost.excerpt)}>

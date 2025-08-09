@@ -92,6 +92,7 @@ if (Astro.request.method === 'POST') {
 
     if (!hasErrors && Astro.cookies.has('userSessionId')) {
       await postComment({
+        baseUrl: String(Astro.url.origin),
         comment: {
           hostId: String(`projects-${slug}`),
           content: String(comment.trim()),
@@ -116,7 +117,10 @@ if (Astro.request.method === 'POST') {
   }
 }
 
-const comments = await getComments({ hostId: `projects-${slug}` });
+const comments = await getComments({
+  baseUrl: String(Astro.url.origin),
+  hostId: `projects-${slug}`
+});
 ---
 
 <Layout
