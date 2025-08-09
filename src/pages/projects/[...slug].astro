@@ -7,26 +7,122 @@ import Back from '@/components/Back.astro';
 import { ghost } from '@/lib/ghost';
 import type { PostOrPage } from '@tryghost/content-api';
 import Socials from '@/components/Socials.astro';
+import Comment from '@/components/Comment.astro';
+import { getComments, postComment } from '@/lib/kommentar';
+import { v7 as uuidV7 } from 'uuid';
 
-export async function getStaticPaths() {
-  const projects = await ghost.posts.browse({
-    limit: 'all',
-    order: 'published_at DESC',
-    filter: 'tag:projects',
-    include: 'tags'
-  });
+export const prerender = false;
 
-  return projects.map((project) => ({
-    params: { slug: project.slug },
-    props: project
-  }));
+if (!Astro.cookies.has('userSessionId')) {
+  Astro.cookies.set('userSessionId', uuidV7());
 }
+
+const { slug } = Astro.params;
+if (slug === undefined) {
+  return Astro.redirect('/404');
+}
+
+const projectPost = await ghost.posts.read(
+  { slug },
+  { filter: 'tag:projects' }
+);
+if (projectPost === undefined) {
+  return Astro.redirect('/404');
+}
+
 type Props = PostOrPage;
 
-const project = Astro.props;
+const errors = {
+  displayName: '',
+  realName: '',
+  comment: ''
+};
+
+const formValues = {
+  displayName: '',
+  realName: '',
+  comment: ''
+};
+
+let commentSubmitted = false;
+
+if (Astro.request.method === 'POST') {
+  try {
+    const data = await Astro.request.formData();
+
+    const displayName = String(data.get('displayName'));
+    const realName = String(data.get('realName'));
+    const comment = String(data.get('comment'));
+
+    formValues.displayName = displayName;
+    formValues.realName = realName;
+    formValues.comment = comment;
+
+    // Display name validation: required, minimum 3 characters
+    if (
+      !displayName ||
+      typeof displayName !== 'string' ||
+      displayName.trim().length < 3
+    ) {
+      errors.displayName +=
+        'Please enter a valid display name. At least 3 characters.';
+    }
+
+    // Real name validation: optional, but if provided, minimum 5 characters
+    if (
+      realName &&
+      realName !== '' &&
+      (typeof realName !== 'string' || realName.trim().length < 5)
+    ) {
+      errors.realName +=
+        'Real name must be a string with at least 5 characters.';
+    }
+
+    // Comment validation: required, between 10 and 255 characters
+    if (
+      !comment ||
+      typeof comment !== 'string' ||
+      comment.trim().length < 10 ||
+      comment.trim().length > 255
+    ) {
+      errors.comment += 'Comment must have between 10 and 255 characters.';
+    }
+
+    const hasErrors = Object.values(errors).some((msg) => msg);
+
+    if (!hasErrors && Astro.cookies.has('userSessionId')) {
+      await postComment({
+        comment: {
+          hostId: String(`projects-${slug}`),
+          content: String(comment.trim()),
+          commenter: {
+            displayName: String(displayName.trim()),
+            realName: String((realName || '').trim())
+          }
+        },
+        sessionId: Astro.cookies.get('userSessionId')!.value
+      });
+
+      formValues.displayName = '';
+      formValues.realName = '';
+      formValues.comment = '';
+
+      commentSubmitted = true;
+    }
+  } catch (error) {
+    if (error instanceof Error) {
+      console.error(error.message);
+    }
+  }
+}
+
+const comments = await getComments({ hostId: `projects-${slug}` });
 ---
 
-<Layout title={String(project.title)} description={String(project.excerpt)}>
+<Layout
+  title={String(projectPost.title)}
+  description={String(projectPost.excerpt)}
+>
   <Container>
     <div class='animate'>
       <Back href='/projects'> Back to projects </Back>
@@ -34,20 +130,80 @@ const project = Astro.props;
     <div class='space-y-1 my-10'>
       <div class='animate flex items-center gap-1.5'>
         <div class='font-base text-sm'>
-          <DateComponent date={new Date(project.published_at!)} />
+          <DateComponent date={new Date(projectPost.published_at!)} />
         </div>
         &bull;
         <div class='font-base text-sm'>
-          {readingTime(project.html!)}
+          {readingTime(projectPost.html!)}
         </div>
       </div>
       <div class='animate text-2xl font-semibold text-black dark:text-white'>
-        {project.title}
+        {projectPost.title}
       </div>
     </div>
     <article class='animate'>
-      <Fragment set:html={project.html} />
+      <Fragment set:html={projectPost.html} />
     </article>
-    <Socials />
+    <div class='animate'>
+      <Socials />
+    </div>
+    <div class='animate w-full h-auto flex flex-col gap-3 mt-6'>
+      <span class='text-xl font-bold'>Comments</span>
+
+      {
+        commentSubmitted && (
+          <div class='border border-lime-600 text-lime-600 px-4 py-3 rounded'>
+            Comment posted successfully!
+          </div>
+        )
+      }
+
+      <form class='w-full flex flex-col gap-2' method='POST'>
+        <span>Post a comment</span>
+        <div class='w-full flex flex-col sm:flex-row justify-between gap-2'>
+          <label class='w-full text-xs flex flex-col gap-2'>
+            Display Name *
+            <input
+              type='text'
+              name='displayName'
+              value={formValues.displayName}
+              required
+            />
+            {
+              errors.displayName && (
+                <span class='text-red-500'>{errors.displayName}</span>
+              )
+            }
+          </label>
+          <label class='w-full text-xs flex flex-col gap-2'>
+            Real Name (overrides Display Name)
+            <input type='text' name='realName' value={formValues.realName} />
+            {
+              errors.realName && (
+                <span class='text-red-500'>{errors.realName}</span>
+              )
+            }
+          </label>
+        </div>
+        <label class='text-xs flex flex-col gap-2'>
+          Comment *
+          <textarea name='comment' value={formValues.comment} required
+          ></textarea>
+          {errors.comment && <span class='text-red-500'>{errors.comment}</span>}
+        </label>
+        <button
+          type='submit'
+          class='flex flex-nowrap py-2 px-4 pr-10 rounded-lg border border-black/15 dark:border-white/20
+        hover:bg-lime-500/30 dark:hover:bg-lime-300/5
+        hover:text-black dark:hover:text-white
+        hover:border-lime-700 dark:hover:border-lime-300
+        hover:shadow-lg hover:shadow-lime-600/30 dark:hover:shadow-lime-300/10
+        transition-all duration-300 ease-in-out
+        font-bold'
+          >Submit</button
+        >
+      </form>
+      {comments.map((comment) => <Comment comment={comment} />)}
+    </div>
   </Container>
 </Layout>
