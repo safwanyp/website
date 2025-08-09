@@ -6,4 +6,4 @@ dateEnd: ''
 ---
 
 - Curamet is a Software Engineering consultancy based in Sweden.
-- Currently working as a consultant IKEA.
+- Currently working as a consultant at IKEA.
