@@ -17,7 +17,7 @@ COPY . .
 RUN pnpm run build
 
 FROM base AS runtime
-RUN apk install curl
+RUN apk add curl
 COPY --from=prod-deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 
