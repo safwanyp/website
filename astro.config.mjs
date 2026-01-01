@@ -23,16 +23,6 @@ export default defineConfig({
         context: 'client',
         access: 'public',
         optional: false
-      }),
-      KOMMENTAR_API_KEY: envField.string({
-        context: 'server',
-        access: 'secret',
-        optional: false
-      }),
-      KOMMENTAR_API_SECRET: envField.string({
-        context: 'server',
-        access: 'secret',
-        optional: false
       })
     }
   },
